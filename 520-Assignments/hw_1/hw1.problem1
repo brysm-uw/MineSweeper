@@ -1,0 +1,27 @@
+Script started on 2025-01-22 18:43:22-08:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="138" LINES="70"]
+[?2004h]0;bryan@PDDS-PF4M0F90: ~/eep520/repo/eep520-smith/520-Assignments/hw_1[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~/eep520/repo/eep520-smith/520-Assignments/hw_1[00m$ echo "Hello and wl[Kelcome to the new quarter!"
+[?2004lHello and welcome to the new quarter!
+[?2004h]0;bryan@PDDS-PF4M0F90: ~/eep520/repo/eep520-smith/520-Assignments/hw_1[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~/eep520/repo/eep520-smith/520-Assignments/hw_1[00m$ date
+[?2004lWed Jan 22 18:46:52 PST 2025
+[?2004h]0;bryan@PDDS-PF4M0F90: ~/eep520/repo/eep520-smith/520-Assignments/hw_1[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~/eep520/repo/eep520-smith/520-Assignments/hw_1[00m$ echo ~
+[?2004l/home/bryan
+[?2004h]0;bryan@PDDS-PF4M0F90: ~/eep520/repo/eep520-smith/520-Assignments/hw_1[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~/eep520/repo/eep520-smith/520-Assignments/hw_1[00m$ cd ~
+[?2004l[?2004h]0;bryan@PDDS-PF4M0F90: ~[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~[00m$ ls
+[?2004l[0m[01;34meep520[0m  [01;34mns-3-dev[0m
+[?2004h]0;bryan@PDDS-PF4M0F90: ~[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~[00m$ mkdir "temp"
+[?2004l[?2004h]0;bryan@PDDS-PF4M0F90: ~[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~[00m$ mv t[K"temp" "n[Ktemp_new"
+[?2004l[?2004h]0;bryan@PDDS-PF4M0F90: ~[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~[00m$ cd ./temp_new/
+[?2004l[?2004h]0;bryan@PDDS-PF4M0F90: ~/temp_new[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~/temp_new[00m$ touch file4[K5
+[?2004l[?2004h]0;bryan@PDDS-PF4M0F90: ~/temp_new[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~/temp_new[00m$ mv file5 test
+[?2004l[?2004h]0;bryan@PDDS-PF4M0F90: ~/temp_new[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~/temp_new[00m$ cd ../
+[?2004l[?2004h]0;bryan@PDDS-PF4M0F90: ~[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~[00m$ rm -rf temp_new/
+[?2004l[?2004h]0;bryan@PDDS-PF4M0F90: ~[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~[00m$ echo "It's a secret!" > secretfile
+[?2004l[?2004h]0;bryan@PDDS-PF4M0F90: ~[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~[00m$ chmod -a[K[Ka-q[Kw secretfile 
+[?2004l[?2004h]0;bryan@PDDS-PF4M0F90: ~[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~[00m$ ls -l secretfile 
+[?2004l-r--r--r-- 1 bryan bryan 15 Jan 22 18:52 secretfile
+[?2004h]0;bryan@PDDS-PF4M0F90: ~[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~[00m$ echo "More Ser[Kcrets!" >> secretfile 
+[?2004lbash: secretfile: Permission denied
+[?2004h]0;bryan@PDDS-PF4M0F90: ~[01;32mbryan@PDDS-PF4M0F90[00m:[01;34m~[00m$ exit
+[?2004lexit
+
+Script done on 2025-01-22 18:57:40-08:00 [COMMAND_EXIT_CODE="1"]
