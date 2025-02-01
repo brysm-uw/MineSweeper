@@ -28,7 +28,7 @@ namespace {
         ASSERT_EQ(x[3],20);
         ASSERT_EQ(x[4],10);
     }
-    TEST(HW2,NumInstances) {
+    TEST(HW2,NumOccurences) {
         int a[] = { 1, 1, 2, 3, 1, 4, 5, 2, 20, 5 };
         ASSERT_EQ(num_occurences(a,10,1), 3);
     }
