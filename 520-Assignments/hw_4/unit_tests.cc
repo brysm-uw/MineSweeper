@@ -4,6 +4,7 @@
 #include "typed_array.h"
 #include "point.h"
 #include "gtest/gtest.h"
+#include "complex.h"
 
 namespace {
 
@@ -65,93 +66,76 @@ namespace {
     }    
 
     TEST(TypedArray,pop) {
-        TypedArray<TypedArray<double>> m;
-        m.set(0,1);
-        m.set(1,3);
-        m.set(2,6);
+        TypedArray<double> m;
+        m.push(1);
+        m.push(3);
+        m.push(6);
         EXPECT_DOUBLE_EQ(m.pop(), 6);
         ASSERT_EQ(m.size(), 2);
     }
     
     TEST(TypedArray,pop_front) {
-        TypedArray<TypedArray<double>> m;
-        m.set(0,1);
-        m.set(1,3);
-        m.set(2,6);
+        TypedArray<double> m;
+        m.push(1);
+        m.push(3);
+        m.push(6);
         EXPECT_DOUBLE_EQ(m.pop_front(), 1);
         ASSERT_EQ(m.size(), 2);
     }
 
     TEST(TypedArray,push) {
-        TypedArray<TypedArray<double>> m;
-        m.set(0,1);
-        m.set(1,3);
-        m.set(2,6);
+        TypedArray<double> m;
+        m.push(1);
+        m.push(3);
+        m.push(6);
         m.push(7);
-        ASSERT_EQ(m.buffer[3], 7);
+        ASSERT_EQ(m.safe_get(3), 7);
     }
 
     TEST(TypedArray,push_front) {
-        TypedArray<TypedArray<double>> m;
-        m.set(0,1);
-        m.set(1,3);
-        m.set(2,6);
+        TypedArray<double> m;
+        m.push(1);
+        m.push(3);
+        m.push(6);
         m.push_front(7);
-        ASSERT_EQ(m.buffer[0], 7);
+        ASSERT_EQ(m.safe_get(0), 7);
     }
 
     TEST(TypedArray,concat) {
-        TypedArray<TypedArray<double>> m;
-        m.set(0,1);
-        m.set(1,3);
-        m.set(2,6);
-        TypedArray<TypedArray<double>> n;
-        m.set(0,9);
-        m.set(1,12);
-        m.set(2,15);
-        TypedArray<TypedArray<double>> o;
+        TypedArray<double> m;
+        m.push(1);
+        m.push(3);
+        m.push(6);
+        TypedArray<double> n;
+        n.push(9);
+        n.push(12);
+        n.push(15);
+        TypedArray<double> o;
         o = m.concat(n);
-        TypedArray<TypedArray<double>> p;
-        p.set(0,1);
-        p.set(1,3);
-        p.set(2,6);
-        p.set(3,9);
-        p.set(4,12);
-        p.set(5,15);
-        ASSERT_EQ(o, p);
+        TypedArray<double> p;
+        p.push(1);
+        p.push(3);
+        p.push(6);
+        p.push(9);
+        p.push(12);
+        p.push(15);
+        for (int idx = 0; idx < 5; idx++) {
+            ASSERT_EQ(p.safe_get(idx), o.safe_get(idx));
+        }
     }
 
-    TEST(TypedArray,reverse) {
-        TypedArray<TypedArray<double>> m;
+    TEST(TypedArray, reverse) {
+        TypedArray<double> m;
         m.set(0,1);
-        m.set(1,3);
-        m.set(2,6);
-        TypedArray<TypedArray<double>>n;
-        n.set(0,6);
-        n.set(1,3);
-        n.set(2,1);
-        ASSERT_EQ(m.reverse(), n);
-    }
-
-    TEST(TypedArray,concat) {
-        TypedArray<TypedArray<double>> m;
-        m.set(0,1);
-        m.set(1,3);
-        m.set(2,6);
-        TypedArray<TypedArray<double>> n;
-        m.set(0,9);
-        m.set(1,12);
-        m.set(2,15);
-        TypedArray<TypedArray<double>> o;
-        o = m + n;
-        TypedArray<TypedArray<double>> p;
-        p.set(0,1);
-        p.set(1,3);
-        p.set(2,6);
-        p.set(3,9);
-        p.set(4,12);
-        p.set(5,15);
-        ASSERT_EQ(o, p);
+        m.push(3);
+        m.push(6);
+        
+        TypedArray<double> n = m;
+        n.reverse();
+        
+        for (int idx = 0; idx < m.size(); idx++) {
+            ASSERT_EQ(m.safe_get(idx), n.safe_get(m.size() - 1 - idx));
+        }
     }
 
     TEST(Complex, real) {
@@ -185,7 +169,7 @@ namespace {
         Complex a = Complex(1,2);
         Complex b = Complex(1,2);
         Complex c = Complex(3,4);
-        ASSERT_EQ(a == b, true);
-        ASSERT_EQ(a == c, false);
+        ASSERT_EQ(a, b);
+        ASSERT_FALSE(a == c);
     }
 }

@@ -15,6 +15,7 @@ public:
 
     // Copy constructor
     TypedArray& operator=(const TypedArray& other);
+    TypedArray& operator+(const TypedArray& other);
 
     // Destructor
     ~TypedArray();
@@ -31,6 +32,8 @@ public:
     void push(const ElementType value);
     void push_front(const ElementType value);
 
+    TypedArray<ElementType> concat(const TypedArray<ElementType>& other);
+    TypedArray<ElementType>& reverse();
 private:
 
     int capacity,
@@ -80,20 +83,15 @@ TypedArray<ElementType> TypedArray<ElementType>::concat(const TypedArray<Element
 
 template <typename ElementType>
 TypedArray<ElementType>& TypedArray<ElementType>::reverse() {
-    int beginning = this->origin;
-    int ending = this->end;
-    while(beginning < ending) {
-        ElementType temp = this->buffer[this->index_to_offset(beginning)];
-        this->buffer[this->index_to_offset(beginning)] = this->buffer[this->index_to_offset(ending)];
-        this->buffer[this->index_to_offset(ending)] = temp;
-        beginning++;
-        ending--;
-    }
+    for (int idx = 0; idx < size() / 2; idx++) {
+        ElementType temp = this->get(idx);
+        this->set(idx, this->safe_get(this->size() - 1 - idx));
+        this->set(this->size() - 1 - idx, temp);
+    }    
     return *this;
 }
-
 template <typename ElementType>
-TypedArray<ElementType> TypedArray<ElementType>::operator+(const TypedArray<ElementType>& other) const {
+TypedArray<ElementType>& TypedArray<ElementType>::operator+(const TypedArray<ElementType>& other) {
     return this->concat(other);
 }
 
@@ -151,7 +149,7 @@ ElementType TypedArray<ElementType>::pop() {
     if (size() == 0) {
         throw std::range_error("Cannot pop from an empty array");
     }
-    ElementType value = buffer[size() - 1];
+    ElementType value = buffer[index_to_offset(size() - 1)];
     end--;
     return value;
 }
@@ -198,7 +196,7 @@ std::ostream &operator<<(std::ostream &os, TypedArray<ElementType> &array)
 
 template <typename ElementType>
 void TypedArray<ElementType>::push(const ElementType value) {
-    while ( out_of_buffer(size() + 1 ) ) {
+    while ( out_of_buffer(size()) ) {
         extend_buffer();
     }
     buffer[index_to_offset(size())] = value;
