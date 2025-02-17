@@ -1,5 +1,5 @@
 #Compilers
-CC          := g++ -std=c++17
+CC          := g++ -std=c++11
 DGEN        := doxygen
 
 #The Target Binary Program

@@ -8,11 +8,11 @@ double Complex::magnitude() const {
 }
 
 Complex operator+(const Complex& a, const Complex& b) {
-    return Complex(a.re + b.re, a.im + b.im);
+    return Complex(a.real() + b.real(), a.imaginary() + b.imaginary());
 }
 
 Complex operator*(const Complex& a, const Complex& b) {
-    return Complex(((a.re * b.re) + (a.im * b.im * -1)), ((a.im * b.re) + (a.re * b.im)));
+    return Complex(((a.real()* b.real()) + (a.imaginary() * b.imaginary() * -1)), ((a.imaginary() * b.real()) + (a.real() * b.imaginary())));
 }
 
 bool operator<(const Complex& a, const Complex& b) {
@@ -22,18 +22,18 @@ bool operator<(const Complex& a, const Complex& b) {
 }
 
 bool operator==(const Complex& a, const Complex& b) {
-    return (b->re == a.re) && (b->im == a.im);
+    return (b.real() == a.real()) && (b.imaginary() == a.imaginary());
 }
 
-double real() const {
-    return re;
+double Complex::real() const {
+    return this->re;
 }
 
-double imaginary() const {
-    return im;
+double Complex::imaginary() const {
+    return this->im;
 }
 
-Complex& conjugate() {
+Complex& Complex::conjugate() {
     im *= -1;
     return *this;
 }
