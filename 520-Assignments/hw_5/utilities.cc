@@ -5,19 +5,29 @@
 #include <fstream>
 #include <regex>
 #include <cctype>
+#include <map>
+#include <sstream>
 #include "utilities.h"
 
 void sort_by_magnitude(std::vector<double>& input) {
-    std::sort(input.begin(), input.end(), [](const double& a,const double& b){return std::abs(a) > std::abs(b); });
+    // Sort the magnitude of numbers in ascending order
+    std::sort(input.begin(), input.end(), [](double& a,double& b){
+        return std::abs(a) < std::abs(b);
+     });
+
+     // Convert all values to abs(value)
+     for(double& val : input) {
+        val = std::abs(val);
+     }
 }
 
-TypedArray<TypedArray<double>> read_matrix_csv(const string path) {
+TypedArray<TypedArray<double>> read_matrix_csv(const std::string path) {
     std::ifstream inputFile(path);
     TypedArray<TypedArray<double>> matrix; 
     if (!inputFile) {
         throw std::runtime_error("Unable to open file " + path);
     }
-    for (string line; std::getline(inputFile, line);) {
+    for (std::string line; std::getline(inputFile, line);) {
         TypedArray<double> row;
         size_t rowIndex = 0;
         // In each line, pos will point to the place where the comma is
@@ -36,7 +46,7 @@ TypedArray<TypedArray<double>> read_matrix_csv(const string path) {
     return matrix;
 }
 
-void write_matrix_csv(const TypedArray<TypedArray<double>>& matrix, const string path) {
+void write_matrix_csv(const TypedArray<TypedArray<double>>& matrix, const std::string path) {
     std::ofstream outputFile(path);
     if (!outputFile) {
         throw std::runtime_error("Unable to open output file " + path);
@@ -54,27 +64,34 @@ void write_matrix_csv(const TypedArray<TypedArray<double>>& matrix, const string
     outputFile.close();
 }
 
-std::map<string, int> occurrence_map(const string path) {
+std::map<std::string, int> occurrence_map(const std::string path) {
+    // Valid word definition
     std::regex pattern("^[a-zA-Z0-9']+$");
-    std::map<string, int> validWords;
+    std::map<std::string, int> validWords;
     std::ifstream inputFile(path);
     if (!inputFile) {
         throw std::runtime_error("Unable to open input file " + path);
     }
     std::string line;
     while (std::getline(inputFile, line)) {
-        for (size_t pos = 0; (pos = line.find(' ')) != std::string::npos;) {
-            std::string token = line.substr(0, pos);
+        std::istringstream instream(line);
+        std::string token;
+        // Use stringstream to split each line into words by white space
+        while (instream >> token) {
+            // Look for punctuation before the word starts that won't be considered and trim them off
+            while (!token.empty() && std::ispunct(static_cast<unsigned char>(token.front())) && static_cast<unsigned char>(token.front()) != '\'') {
+                token.erase(token.begin());
+            }
+            // Look for punctuation after the word ends that won't be considered and trim them off
+            while (!token.empty() && std::ispunct(static_cast<unsigned char>(token.back())) && static_cast<unsigned char>(token.back()) != '\'') {
+                token.pop_back();
+            }
+            // Look at the word and compare it to the valid word pattern (then transform it to lower case)
             if (std::regex_match(token, pattern)) {
                 std::transform(token.begin(), token.end(), token.begin(), ::tolower);
                 validWords[token]++;
             }
-            line.erase(0, pos + 1);
         }
-    }
-    if (!line.empty() && std::regex_match(line, pattern)) {
-        std::transform(line.begin(), line.end(), line.begin(), ::tolower);
-        validWords[line]++;
     }
     inputFile.close();
     return validWords;
